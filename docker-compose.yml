@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  nanobot:
+    build: .
+    container_name: zuberabot
+    restart: unless-stopped
+    ports:
+      - "18790:18790"
+    environment:
+      - OLLAMA_API_BASE=http://host.docker.internal:11434
+      - DATABASE_URL=postgresql://zubera:zubera_password@db:5432/zubera_bot
+      - PYTHONIOENCODING=utf-8
+    env_file:
+      - .env
+    volumes:
+      - ~/.nanobot:/root/.nanobot
+      - ./workspace:/root/.zuberabot/workspace
+    depends_on:
+      - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: ["gateway"]
+
+  db:
+    image: postgres:15-alpine
+    container_name: zuberabot-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=zubera
+      - POSTGRES_PASSWORD=zubera_password
+      - POSTGRES_DB=zubera_bot
+    volumes:
+      - zubera_pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  zubera_pgdata:

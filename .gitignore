@@ -13,3 +13,10 @@ docs/
 *.pyz
 *.pywz
 *.pyzz
+venv/
+.venv/
+bridge/node_modules/
+__pycache__/
+.pytest_cache/
+.agent/
+.vscode/

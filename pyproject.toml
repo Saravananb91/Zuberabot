@@ -1,5 +1,5 @@
 [project]
-name = "nanobot-ai"
+name = "zuberabot-ai"
 version = "0.1.3.post3"
 description = "A lightweight personal AI assistant framework"
 requires-python = ">=3.11"
@@ -18,7 +18,7 @@ classifiers = [
 
 dependencies = [
     "typer>=0.9.0",
-    "litellm>=1.0.0",
+    "openai>=1.0.0",
     "pydantic>=2.0.0",
     "pydantic-settings>=2.0.0",
     "websockets>=12.0",
@@ -28,7 +28,8 @@ dependencies = [
     "readability-lxml>=0.8.0",
     "rich>=13.0.0",
     "croniter>=2.0.0",
-    "python-telegram-bot>=21.0",
+    "sqlalchemy>=2.0.0",
+    "psycopg2-binary>=2.9.0",
 ]
 
 [project.optional-dependencies]
@@ -39,36 +40,36 @@ dev = [
 ]
 
 [project.scripts]
-nanobot = "nanobot.cli.commands:app"
+nanobot = "zuberabot.cli.commands:app"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["nanobot"]
+packages = ["zuberabot"]
 
 [tool.hatch.build.targets.wheel.sources]
-"nanobot" = "nanobot"
+"zuberabot" = "zuberabot"
 
 # Include non-Python files in skills
 [tool.hatch.build]
 include = [
-    "nanobot/**/*.py",
-    "nanobot/skills/**/*.md",
-    "nanobot/skills/**/*.sh",
+    "zuberabot/**/*.py",
+    "zuberabot/skills/**/*.md",
+    "zuberabot/skills/**/*.sh",
 ]
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "nanobot/",
+    "zuberabot/",
     "bridge/",
     "README.md",
     "LICENSE",
 ]
 
 [tool.hatch.build.targets.wheel.force-include]
-"bridge" = "nanobot/bridge"
+"bridge" = "zuberabot/bridge"
 
 [tool.ruff]
 line-length = 100
