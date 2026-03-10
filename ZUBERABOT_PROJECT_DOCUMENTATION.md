@@ -70,8 +70,8 @@ flowchart TD
     end
 
     subgraph DATA["🗄️ Data Layer"]
-        PG["🐘 PostgreSQL 15<br/>8 Tables: Users, Sessions,<br/>Tickets, Expenses, Preferences"]
-        CR["📊 ChromaDB<br/>Vector Store - all-MiniLM-L6-v2"]
+        PG["🐘 PostgreSQL 15<br/>9 Tables: Users, Sessions,<br/>Tickets, Expenses, Preferences, Docs"]
+        CR["📊 PostgreSQL JSON<br/>Vector Knowledge Base"]
         WS["📁 User Workspaces<br/>Per-user file storage"]
     end
 
@@ -127,8 +127,7 @@ flowchart TD
 | **LiteLLM Provider** | `LiteLLMProvider` via LiteLLM library | Unified interface to 7+ LLM providers |
 | **Tool Registry** | 10+ async Python tools | Finance, expense, ticket, RAG, web, file, shell, spawn |
 | **User Memory** | `UserMemoryStore` + filesystem | Long-term memory (`MEMORY.md`) + daily notes per user |
-| **PostgreSQL** | PostgreSQL 15 + SQLAlchemy 2.0 | 8 tables: users, verifications, preferences, conversations, recommendations, sessions, workspaces, tickets |
-| **ChromaDB** | ChromaDB + SentenceTransformers | Vector knowledge base for RAG with `all-MiniLM-L6-v2` embeddings |
+| **PostgreSQL** | PostgreSQL 15 + SQLAlchemy 2.0 | Core tables + Vector Knowledge base (hybrid JSON arrays) |
 
 ### Key Source Files
 
@@ -147,7 +146,7 @@ flowchart TD
 | `finance.py` | `zuberabot/agent/tools/finance.py` | Financial tools (stocks, MF, recommendations) |
 | `expense.py` | `zuberabot/agent/tools/expense.py` | Expense tracking tool |
 | `ticket.py` | `zuberabot/agent/tools/ticket.py` | Support ticket management |
-| `rag.py` | `zuberabot/agent/tools/rag.py` | RAG knowledge base (ChromaDB) |
+| `rag.py` | `zuberabot/agent/tools/rag.py` | RAG knowledge base (PostgreSQL) |
 | `web.py` | `zuberabot/agent/tools/web.py` | Web search + URL fetch tools |
 
 ---
@@ -268,7 +267,7 @@ The `FinancialOllamaProvider` (extends `OllamaProvider`) adds financial-specific
 
 | Model | Library | Dimension | Purpose |
 |-------|---------|-----------|---------|
-| `all-MiniLM-L6-v2` | SentenceTransformers | 384 | Document embeddings for ChromaDB vector search |
+| `all-MiniLM-L6-v2` | SentenceTransformers | 384 | Document embeddings for Postgres hybrid vector search |
 
 ---
 
@@ -324,7 +323,7 @@ The `FinancialOllamaProvider` (extends `OllamaProvider`) adds financial-specific
 | 1 | `finance_tool` | `tools/finance.py` | Stock prices, fund info, MF recommendations, NAV, comparison |
 | 2 | `expense_tracker` | `tools/expense.py` | Add expenses, get expenses, monthly summary by category |
 | 3 | `ticket_manager` | `tools/ticket.py` | Create, get, update, list support tickets with priority |
-| 4 | `rag_knowledge` | `tools/rag.py` | ChromaDB knowledge store with multi-context isolation |
+| 4 | `rag_knowledge` | `tools/rag.py` | PostgreSQL knowledge store with metadata isolation |
 | 5 | `web_search` | `tools/web.py` | Brave Search API — titles, URLs, snippets |
 | 6 | `web_fetch` | `tools/web.py` | Fetch URL content, HTML → markdown/text extraction |
 | 7 | `message` | `tools/message.py` | Send messages to specific chat channels |
@@ -357,7 +356,7 @@ The `FinancialOllamaProvider` (extends `OllamaProvider`) adds financial-specific
 
 | Action | Params | Description |
 |--------|--------|-------------|
-| `add` | `content` or `file_path`, `context`, `category` | Store text/PDF in ChromaDB with metadata |
+| `add` | `content` or `file_path`, `context`, `category` | Store text/PDF in PostgreSQL with metadata |
 | `search` | `query`, `context` | Semantic search across stored knowledge (top 3 results) |
 | `switch_context` | `context` | Switch active context (e.g., "banking", "personal") |
 | `list_contexts` | — | List all available knowledge contexts |
@@ -538,7 +537,7 @@ The `FinancialOllamaProvider` (extends `OllamaProvider`) adds financial-specific
 - Historical performance data for return calculations
 
 ### 🧠 RAG Knowledge Base
-- **ChromaDB** vector store with `all-MiniLM-L6-v2` SentenceTransformer embeddings
+- **PostgreSQL** vector store with JSON embeddings and hybrid matching
 - Multi-context isolation: `banking`, `personal`, `general` (or custom)
 - PDF document ingestion support via `extract_text_from_pdf`
 - Semantic search returns top 3 relevant passages
@@ -576,7 +575,7 @@ The `FinancialOllamaProvider` (extends `OllamaProvider`) adds financial-specific
 | **Framework** | zuberabot-ai | 0.1.3 | Agent orchestration |
 | **LLM Gateway** | LiteLLM | ≥1.0 | Unified multi-provider LLM API |
 | **Database** | PostgreSQL | 15 (Alpine) | Primary relational database |
-| **Vector DB** | ChromaDB | Latest | RAG knowledge base |
+| **Vector DB** | PostgreSQL JSON | 15 | RAG generative knowledge base |
 | **ORM** | SQLAlchemy | ≥2.0 | Database object mapping + QueuePool |
 | **DB Driver** | psycopg2-binary | ≥2.9 | PostgreSQL Python driver |
 | **Validation** | Pydantic + pydantic-settings | ≥2.0 | Config schema + env injection |

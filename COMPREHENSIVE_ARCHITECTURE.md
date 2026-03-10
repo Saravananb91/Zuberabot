@@ -437,7 +437,7 @@
 
 ### AI/ML Technologies
 - **LLM Integration**: OpenRouter, Anthropic, OpenAI, local models
-- **Vector Database**: ChromaDB for semantic search
+- **Vector Database**: PostgreSQL (JSON Embeddings) for hybrid search
 - **NLP Libraries**: spaCy, transformers
 - **ML Frameworks**: scikit-learn, pandas, numpy
 
