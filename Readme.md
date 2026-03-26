@@ -488,7 +488,7 @@ zuberabot/
 
 Saravanan B - [mrsaravananb@gmail.com ](mrsaravananb@gmail.com)
 
-Project Link: [https://github.com/Saravananb91/road-pothole-](https://github.com/Saravananb91/road-pothole-)
+Project Link: [https://github.com/Saravananb91/road-pothole-](https://github.com/Saravananb91/zuberabot)
 
 Portfolio website : [portfolio-saravananb.vercel.app](https://v0-portfolio-saravanan-b.vercel.app/) 
 
