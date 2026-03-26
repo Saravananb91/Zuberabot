@@ -484,6 +484,15 @@ zuberabot/
     ├── test_multi_user.py
     └── test_conversational_recommendations.py
 ```
+## Author 
+
+Saravanan B - [mrsaravananb@gmail.com ](mrsaravananb@gmail.com)
+
+Project Link: [https://github.com/Saravananb91/road-pothole-](https://github.com/Saravananb91/road-pothole-)
+
+Portfolio website : [portfolio-saravananb.vercel.app](https://v0-portfolio-saravanan-b.vercel.app/) 
+
+Linkedin: [www.linkedin.com/in/saravanan-b-46244b290](www.linkedin.com/in/saravanan-b-46244b290)
 
 ---
 
